@@ -442,7 +442,6 @@ namespace EventosCancun.Controllers
                 ModelState.AddModelError("", error);
             }
         }
-
         private ActionResult RedirectToLocal(string returnUrl)
         {
             if (Url.IsLocalUrl(returnUrl))
