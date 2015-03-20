@@ -251,6 +251,7 @@
       <LastGenOutput>EventosCancun.cs</LastGenOutput>
     </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\CrearEvento.js" />
     <Content Include="Scripts\Eventos.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -694,6 +695,7 @@
     <Content Include="Views\Etiquetas\Edit.cshtml" />
     <Content Include="Views\Etiquetas\Index.cshtml" />
     <Content Include="Views\Eventos\Index.cshtml" />
+    <Content Include="Views\Eventos\CrearEvento.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

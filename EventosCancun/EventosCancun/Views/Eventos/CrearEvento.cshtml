@@ -1,0 +1,102 @@
+﻿@model IEnumerable<Etiquetas>
+@{
+    ViewBag.Title = "CrearEvento";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@section scripts {
+    
+    <script type="text/javascript" src="~/Scripts/jqwidgets/jqx-all.js"></script>
+    <link rel="stylesheet" type="text/css" href="~/Scripts/jqwidgets/styles/jqx.base.css" />
+    <script type="text/javascript" src="~/Scripts/jqwidgets/jqxcore.js"></script>
+    <script type="text/javascript" src="~/Scripts/jqwidgets/jqxbuttons.js"></script>
+    <script type="text/javascript" src="~/Scripts/jqwidgets/jqxfileupload.js"></script>
+    <script type="text/javascript" src="~/Scripts/CrearEvento.js"></script>
+}
+
+<h2>Crear Evento</h2>
+
+@using (Html.BeginForm())
+{
+    <div class="form-horizontal">
+        
+        <hr />
+
+        <div class="form-group">
+            @Html.Label("Titulo")
+            <br />
+            @Html.Editor("Titulo")
+        </div>
+
+        <div class="form-group">
+            @Html.Label("SubTitulo")
+            <br />
+            @Html.Editor("SubTitulo")
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Fecha")
+            <div id="FechaControl"></div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Fecha Fin")
+            <div id="FechaFinControl"></div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Evento VIP")
+            <br />
+            @Html.CheckBox("EventoVip")
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Pagina Web")
+            <br />
+            @Html.Editor("PaginaWeb")
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Numero de Contacto")
+            <br />
+            @Html.Editor("NumeroContacto")
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Correo contacto del evento")
+            <br />
+            @Html.Editor("CorreoContacto")
+        </div>
+        <div class="form-group">
+            @Html.Label("Nombre Cliente")
+            <br />
+            @Html.Editor("NombreCliente")
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Correo Cliente")
+            <br />
+            @Html.Editor("CorreoCliente")
+        </div>
+        <div id="ChecksEtiqueta" class="form-group">
+            @foreach (var etiqueta in Model)
+            {
+
+                <input id="@etiqueta.Nombre + @etiqueta.ID" type="checkbox" value="@etiqueta.ID" />
+                <label>@etiqueta.Nombre</label>
+                <br />
+            }
+        </div>
+        <br />
+
+        <br />
+        <div class="form-group">
+            <input type="submit" value="Crear Evento" id="CreateEvent" class="btn btn-default" />
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Regreso a la Lista", "Index")
+</div>
