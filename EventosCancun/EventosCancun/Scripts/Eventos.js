@@ -28,7 +28,7 @@
 
             source: dataAdapter,
             columns: [
-                { text: "ID", datafield: "ID" },
+                //{ text: "ID", datafield: "ID" },
                 { text: "Images", datafield: "NumeroContacto", width: 60, cellsrenderer: imagerenderer },
                 { text: "Titulo", datafield: "Titulo" },
                 { text: "Sub Titulo", datafield: "Subtitulo" },
