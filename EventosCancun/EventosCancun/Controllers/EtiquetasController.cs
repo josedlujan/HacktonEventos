@@ -10,6 +10,7 @@ using EventosCancun;
 
 namespace EventosCancun.Controllers
 {
+    [Authorize]
     public class EtiquetasController : Controller
     {
         private EventosCancunEntities db = new EventosCancunEntities();
