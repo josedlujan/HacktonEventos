@@ -28,9 +28,9 @@
         };
 
         var p = $.ajax({
-            data: { 'evento': JSON.stringify(Evento), 'etiquetas': JSON.stringify(etiquetas) }, // data being sent to the controller
-            type: 'POST', // we are sending data so this is POST
-            traditional: true,  // traditonal is true so that the data passed is encoded in a format that works with the MVC framework.
+            data: { 'evento': JSON.stringify(Evento), 'etiquetas': JSON.stringify(etiquetas) }, 
+            type: 'POST',
+            traditional: true,  
             url: '/eventos/GuardarEvento'         
         });
         $.when(p).done(
