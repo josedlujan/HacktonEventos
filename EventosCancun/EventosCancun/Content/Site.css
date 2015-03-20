@@ -22,3 +22,12 @@ select,
 textarea {
     max-width: 280px;
 }
+
+#bodyContainer
+{
+    min-height:500px;
+}
+#footerContainer
+{
+    text-align:right;
+}
