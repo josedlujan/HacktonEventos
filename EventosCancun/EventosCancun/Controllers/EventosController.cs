@@ -8,6 +8,7 @@ namespace EventosCancun.Controllers
 {
     public class EventosController : Controller
     {
+        [HttpGet]
         public JsonResult ObtenerTodosEventos()
         {
             try
@@ -15,6 +16,7 @@ namespace EventosCancun.Controllers
                 EventosCancunEntities entidades = new EventosCancunEntities();
                 entidades.Configuration.ProxyCreationEnabled = false;
                 List<Eventos> eventos = entidades.Eventos.ToList();
+                Response.AppendHeader("Access-Control-Allow-Origin", "*");
                 return Json(eventos, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
@@ -31,6 +33,48 @@ namespace EventosCancun.Controllers
         {
             EventosCancunEntities entidades = new EventosCancunEntities();
             return View(entidades.Eventos.ToList());
+        }
+        public ActionResult CrearEvento()
+        {
+            List<Etiquetas> etiquetas = new List<Etiquetas>();
+            using (var db = new EventosCancunEntities())
+            {
+                etiquetas = db.Etiquetas.ToList();
+            }
+            return View(etiquetas);
+        }
+        public ActionResult GuardarEvento(string evento, string etiquetas)
+        {
+            Eventos Evento = null;
+            if (ModelState.IsValid)
+            {
+                Evento = (Eventos)Newtonsoft.Json.JsonConvert.DeserializeObject(evento, typeof(Eventos));
+                var etiquetasEventos = ((Newtonsoft.Json.Linq.JContainer)(Newtonsoft.Json.JsonConvert.DeserializeObject(etiquetas))).ToObject<string[]>();
+                EventosCancunEntities db = new EventosCancunEntities();
+                db.Eventos.Add(Evento);
+                db.SaveChanges();
+                foreach (var etiqueta in etiquetasEventos)
+                {
+                    EtiquetasEvento etiquetaEvento = new EtiquetasEvento();
+                    etiquetaEvento.Eventos = Evento;
+                    etiquetaEvento.Etiquetas = db.Etiquetas.FirstOrDefault(x => x.ID.ToString() == etiqueta);
+                    Evento.EtiquetasEvento.Add(etiquetaEvento);
+                }
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            return View(Evento);
+        }
+        public ActionResult BorrarEvento(int? id)
+        {
+            EventosCancunEntities db = new EventosCancunEntities();
+            foreach (var etiquetaevento in db.EtiquetasEvento.Where(s => s.IdEvento == id.Value).ToList())
+            {
+                db.EtiquetasEvento.Remove(etiquetaevento);
+            }
+            db.Eventos.Remove(db.Eventos.FirstOrDefault(ev => ev.ID == id));
+            db.SaveChanges();
+            return RedirectToAction("Index");
         }
     }
 }
