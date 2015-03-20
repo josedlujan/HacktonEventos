@@ -2,7 +2,12 @@
     $("#FechaControl").jqxDateTimeInput({ width: '250px', height: '25px' });
     $("#FechaFinControl").jqxDateTimeInput({ width: '250px', height: '25px' });
     
-    $("#CreateEvent").click(function () {
+    $("#CreateEvent").click(function (e) {
+        if (e.preventDefault) {
+            e.preventDefault();
+        } else {
+            e.returnValue = false;
+        }
         var initialDate = $('#FechaControl').jqxDateTimeInput('getDate');
         var endDate = $('#FechaFinControl').jqxDateTimeInput('getDate');
         var etiquetas = [];
@@ -20,23 +25,22 @@
             CorreoContacto: $("#CorreoContacto").val(),
             CorreoCliente: $("#CorreoCliente").val(),
             NombreCliente: $("#NombreCliente").val()
-        }
-        $.ajax({
-            url: "/eventos/GuardarEvento",
-            data: { 'evento': JSON.stringify(Evento), 'etiquetas': JSON.stringify(etiquetas) },
-            succes: function (result) {
-                window.location.replace("~/eventos");
-            },
-            error: function (xhr, ajaxOptions, thrownError) {
-                if (xhr.responseText == "") {
-                    window.location = "www.google.com";
-                }
+        };
 
-            },
-            contentType: 'application/json;charset=utf-8',
-            cache: false
-
-        })
+        var p = $.ajax({
+            data: { 'evento': JSON.stringify(Evento), 'etiquetas': JSON.stringify(etiquetas) }, // data being sent to the controller
+            type: 'POST', // we are sending data so this is POST
+            traditional: true,  // traditonal is true so that the data passed is encoded in a format that works with the MVC framework.
+            url: '/eventos/GuardarEvento'         
+        });
+        $.when(p).done(
+            function (data) {
+                if (data.RedirectUrl)
+                    window.location.href = data.RedirectUrl;               
+            })
+        $.when(p).fail(function (xhr, statusText, error) {
+        });
+       
     })
 });
 
