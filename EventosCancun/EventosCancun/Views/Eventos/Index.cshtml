@@ -1,0 +1,21 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section scripts {
+    <script type="text/javascript" src="~/Scripts/jqwidgets/jqx-all.js"></script>
+    <link rel="stylesheet" type="text/css" href="~/Scripts/jqwidgets/styles/jqx.base.css" />
+    <script type="text/javascript" src="~/Scripts/Eventos.js"></script>
+}
+<h2>Eventos</h2>
+
+@Html.ActionLink("Crear Evento", "CrearEvento", "Eventos")
+
+
+<div id="grid"></div>
+
+
+
+
+
