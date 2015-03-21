@@ -12,9 +12,11 @@ EventosCancun.Eventos = (function (e, $) {
     var eventos = function () {
         //View
         _templates = function () {
+            var d = new Date();
+
             var _default = function (item) {
-                var _tmpl = _.template("<div><div><img href=''></img></div><div><span>{{=Nombre}}</span></div><div><span>{{=Fecha}}</span></div><div></div></div>");
-                return _tmpl({Nombre: "Nombre_Test", Fecha: "Fecha_Test"});
+                var _tmpl = _.template("<div class='read-event' id='{{=ID}}'><div><img href=''></img></div><div><span>{{=Titulo}}</span></div><div><span>{{=Fecha}} - {{=FechaFin}}</span></div><div></div></div>");
+                return _tmpl({ ID: item.ID, Titulo: item.Titulo, Fecha: Date(item.Fecha), FechaFin: Date(item.FechaFin) });
             }
 
             var _templateType = {
@@ -31,6 +33,10 @@ EventosCancun.Eventos = (function (e, $) {
         },
 
         _view = function (templates, items) {
+            $("#Eventos").on("click", "read-event", function (event) {
+                var params = { id: $(this).id };
+            });
+
             _renderView = function(){
                 var _eventList = [];
                 _.each(items, function(item){
@@ -52,7 +58,21 @@ EventosCancun.Eventos = (function (e, $) {
         //controller
         _controller = function () {
             _getEvents = function () {
-                return [{ Nombre: "Nombre_Test1", Fecha: "Fecha_Test1" }, { Nombre: "Nombre_Test2", Fecha: "Fecha_Test2" }];
+                $.ajax({
+                    async: false,
+                    type: 'GET', // we are sending data so this is POST
+                    url: 'http://localhost:44440/eventos',
+                    success: function (result) {
+                        debugger;
+                    },
+                    error: function (err, x, t) {
+                        debugger;
+                    }
+                });
+
+
+
+                return [{ "ID": 1, "Titulo": "Evento 1", "Subtitulo": "El primer evento del programa", "Fecha": "\/Date(1393650000000)\/", "FechaFin": null, "EventoVIP": false, "PaginaWeb": "google.com", "NumeroContacto": "Numero del contacto", "CorreoContacto": "123123123", "CorreoCliente": "asdasd@asda.com", "NombreCliente": "nombre del cliente", "EtiquetasEvento": [], "EventoURLs": [] }, { "ID": 10, "Titulo": "evento 2", "Subtitulo": "Segundo event", "Fecha": "\/Date(1444712400000)\/", "FechaFin": null, "EventoVIP": false, "PaginaWeb": "googel.com", "NumeroContacto": "numero del otro c", "CorreoContacto": "asdasda@asdas.com", "CorreoCliente": "asdasd@asdadsasd.com", "NombreCliente": "nombre del  cliente", "EtiquetasEvento": [], "EventoURLs": [] }, { "ID": 71, "Titulo": "sdf", "Subtitulo": "subt", "Fecha": "\/Date(1426654800000)\/", "FechaFin": "\/Date(1426654800000)\/", "EventoVIP": false, "PaginaWeb": "", "NumeroContacto": "", "CorreoContacto": "", "CorreoCliente": "", "NombreCliente": "", "EtiquetasEvento": [], "EventoURLs": [] }];
             };
 
             return {
@@ -63,8 +83,11 @@ EventosCancun.Eventos = (function (e, $) {
         start = function () {
             var controller = new _controller();
             var templates = new _templates();
-            var view = new _view(templates, controller.GetEvents());
-            view.RefreshEvents();
+
+            $.when(controller.GetEvents()).done(function (events) {
+                var view = new _view(templates, controller.GetEvents());
+                view.RefreshEvents();
+            });
         }
 
         return {
