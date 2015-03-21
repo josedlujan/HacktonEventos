@@ -2,10 +2,9 @@
     $('#jqxFileUpload').jqxFileUpload({ width: 300, uploadUrl: '../../UploadFiles.asmx/Upload', fileInputName: 'fileToUpload' });
     ObtenerImagenes();
     $('#jqxFileUpload').on('uploadEnd', function (event) {
-        window.location.href = "/eventos/agregarimagenes/" + $("#IdEvento").val();
+        $("#ImagenesSlider").innerHtml = "";
+        ObtenerImagenes();
     });
-
-
 });
 
 ObtenerImagenes = function () {

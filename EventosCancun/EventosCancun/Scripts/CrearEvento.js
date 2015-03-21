@@ -37,7 +37,6 @@
             function (data) {
                 if (data.RedirectUrl)
                 {
-                    debugger;
                     window.location.href = data.RedirectUrl; 
                 }              
             })
