@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Services;
 using System.IO;
+
 namespace EventosCancun
 {
     /// <summary>
@@ -20,6 +21,7 @@ namespace EventosCancun
         [WebMethod(EnableSession = true)]
         public void Upload()
         {
+            
             string ID = HttpContext.Current.Request.UrlReferrer.Segments[3];
             
             if (!System.IO.Directory.Exists(Server.MapPath(@"~/uploads/" + ID)))
@@ -38,7 +40,12 @@ namespace EventosCancun
                     if (userPostedFile.ContentLength > 0)
                     {
                         userPostedFile.SaveAs(filepath + "\\" + Path.GetFileName(userPostedFile.FileName));
-                        
+                        EventosCancunEntities db = new EventosCancunEntities();
+                        EventoURLs url = new EventoURLs();
+                        url.IdEvento = Convert.ToInt32(ID);
+                        url.URL = string.Concat(HttpContext.Current.Request.Url.Host,"/uploads/",ID, "/",Path.GetFileName(userPostedFile.FileName));
+                        db.EventoURLs.Add(url);
+                        db.SaveChanges();
                     }
                 }
                 catch (Exception)
