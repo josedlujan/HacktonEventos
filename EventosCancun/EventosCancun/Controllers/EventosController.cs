@@ -83,13 +83,18 @@ namespace EventosCancun.Controllers
         }
         public JsonResult ImagenesEvento(int id)
         {
-            string[] Archivos = Directory.GetFiles(Server.MapPath("~/uploads/" + id));
-            List<string> ListArchivos = new List<string>();
-            foreach (var archivo in Archivos)
-            {
-                ListArchivos.Add(archivo.Replace(Server.MapPath("~/uploads"), "").Replace(@"\", @"/"));
+            var ListArchivos = new List<string>();
+            if (Directory.Exists(Server.MapPath("~/uploads/" + id)))
+            { 
+                string[] Archivos = Directory.GetFiles(Server.MapPath("~/uploads/" + id));
+
+                foreach (var archivo in Archivos)
+                {
+                    ListArchivos.Add(archivo.Replace(Server.MapPath("~/uploads"), "").Replace(@"\", @"/"));
+                }
             }
             return Json(ListArchivos, JsonRequestBehavior.AllowGet);
+           
         }
 
     }

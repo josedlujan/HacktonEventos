@@ -36,7 +36,10 @@
         $.when(p).done(
             function (data) {
                 if (data.RedirectUrl)
-                    window.location.href = data.RedirectUrl;               
+                {
+                    debugger;
+                    window.location.href = data.RedirectUrl; 
+                }              
             })
         $.when(p).fail(function (xhr, statusText, error) {
         });
