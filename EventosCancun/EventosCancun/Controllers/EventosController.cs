@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-
+using System.IO;
 namespace EventosCancun.Controllers
 {
     public class EventosController : Controller
@@ -62,7 +62,6 @@ namespace EventosCancun.Controllers
                 }
                 db.SaveChanges();
                 return Json(new { RedirectUrl = Url.Action("Index", "Eventos") });
-               // return RedirectToAction("Index","Eventos");
             }
             return View(Evento);
         }
@@ -77,5 +76,21 @@ namespace EventosCancun.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
+        public ActionResult AgregarImagenes(int id)
+        {
+            EventosCancunEntities db = new EventosCancunEntities();
+            return View(db.Eventos.FirstOrDefault(s => s.ID == id));
+        }
+        public JsonResult ImagenesEvento(int id)
+        {
+            string[] Archivos = Directory.GetFiles(Server.MapPath("~/uploads/" + id));
+            List<string> ListArchivos = new List<string>();
+            foreach (var archivo in Archivos)
+            {
+                ListArchivos.Add(archivo.Replace(Server.MapPath("~/uploads"), "").Replace(@"\", @"/"));
+            }
+            return Json(ListArchivos, JsonRequestBehavior.AllowGet);
+        }
+
     }
 }

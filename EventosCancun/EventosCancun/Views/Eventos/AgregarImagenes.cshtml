@@ -1,0 +1,73 @@
+﻿@model  Eventos
+@{
+    ViewBag.Title = "AgregarImagenes";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@section scripts {
+
+<script type="text/javascript" src="~/Scripts/jqwidgets/jqx-all.js"></script>
+<link rel="stylesheet" type="text/css" href="~/Scripts/jqwidgets/styles/jqx.base.css" />
+<script type="text/javascript" src="~/Scripts/jqwidgets/jqxcore.js"></script>
+<script type="text/javascript" src="~/Scripts/jqwidgets/jqxbuttons.js"></script>
+<script type="text/javascript" src="~/Scripts/jqwidgets/jqxfileupload.js"></script>
+<script type="text/javascript" src="~/Scripts/AgregarImagenes.js"></script>
+<script type="text/javascript" src="~/Scripts/jssor.js"></script>
+<script type="text/javascript" src="~/Scripts/jssor.slider.js"></script>
+    }
+<h2>Agregar Imagenes</h2>
+
+<h4>@Model.Titulo</h4>
+
+<h4>@Model.Subtitulo</h4>
+<input type="hidden" id="IdEvento" value="@Model.ID" />
+<div id="jqxFileUpload">
+</div>
+
+<br /><br />
+<div id="slider1_container" style="position: relative; top: 0px; left: 0px; width: 600px;
+        height: 300px; ">
+    <div u="slides" id="ImagenesSlider" style="cursor: move; position: absolute; left: 0px; top: 0px; width: 600px; height: 300px;
+            overflow: hidden;">
+    </div>
+    <style>
+        .jssora03l, .jssora03r, .jssora03ldn, .jssora03rdn {
+            position: absolute;
+            cursor: pointer;
+            display: block;
+            background: url(../../uploads/a03.png) no-repeat;
+            overflow: hidden;
+        }
+
+        .jssora03l {
+            background-position: -3px -33px;
+        }
+
+        .jssora03r {
+            background-position: -63px -33px;
+        }
+
+        .jssora03l:hover {
+            background-position: -123px -33px;
+        }
+
+        .jssora03r:hover {
+            background-position: -183px -33px;
+        }
+
+        .jssora03ldn {
+            background-position: -243px -33px;
+        }
+
+        .jssora03rdn {
+            background-position: -303px -33px;
+        }
+    </style>
+    <span u="arrowleft" class="jssora03l" style="width: 55px; height: 55px; top: 123px; left: 8px;">
+    </span>
+    <span u="arrowright" class="jssora03r" style="width: 55px; height: 55px; top: 123px; right: 8px">
+    </span>
+
+
+</div>
