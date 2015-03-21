@@ -8,7 +8,7 @@ namespace EventosCancun.Controllers
 {
     public class EventosController : Controller
     {
-        [HttpGet]
+        [CrossBrowsing]
         public JsonResult ObtenerTodosEventos()
         {
             try
