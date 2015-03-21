@@ -61,7 +61,8 @@ namespace EventosCancun.Controllers
                     Evento.EtiquetasEvento.Add(etiquetaEvento);
                 }
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return Json(new { RedirectUrl = Url.Action("Index", "Eventos") });
+               // return RedirectToAction("Index","Eventos");
             }
             return View(Evento);
         }
